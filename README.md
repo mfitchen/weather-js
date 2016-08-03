@@ -73,3 +73,12 @@ $ npm install <!-- saved into node_modules/ -->
 ```
 $ bower install <!-- saved into bower_components/ -->
 ```
+
+## USING SASS
+
+```
+$ gem install sass
+```
+```
+$ npm install gulp-sass gulp-sourcemaps --save-dev
+```

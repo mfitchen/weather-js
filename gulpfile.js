@@ -20,6 +20,18 @@ var lib = require('bower-files')({ // must use with Bootstrap
   }
 });
 var browserSync = require('browser-sync').create();
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+
+//to run: $ gulp cssBuild // This task loads all source files inside of our scss folder with the extension .scss.
+gulp.task('cssBuild', function() {
+  return gulp.src(['scss/*.scss'])
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./build/css'))
+    .pipe(browserSync.stream());
+});
 
 gulp.task('concatInterface', function() {
   return gulp.src(['./js/*-interface.js'])
@@ -69,6 +81,7 @@ gulp.task("build", ['clean'], function(){
     gulp.start('jsBrowserify'); //to run: $ gulp build
   }
   gulp.start('bower');
+  gulp.start('cssBuild');
 });
 
 //to run: $ gulp jshint
@@ -90,6 +103,7 @@ gulp.task('serve', ['build'], function() {
   gulp.watch(['js/*.js'], ['jsBuild']);
   gulp.watch(['bower.json'], ['bowerBuild']);
   gulp.watch(['*.html'], ['htmlBuild']);
+  gulp.watch(["scss/*.scss"], ['cssBuild']);
 });
 
 //All of the following tasks run automatically when server is running
